@@ -37,10 +37,13 @@ class User(models.Model):
     user_id = models.IntegerField(
         blank=False,
         primary_key=True)
-    movies = models.ForeignKey(
+    movies = models.ManyToManyField(
         Movie,
-        on_delete=models.CASCADE,
-        related_name="user")
+        related_name="users",
+        related_query_name="user")
+    
+    def __str__(self):
+        return "user " + str(self.user_id)
 
 
 class Rating(models.Model):
@@ -72,3 +75,14 @@ class Tag(models.Model):
         User,
         on_delete=models.CASCADE,
         related_name="user")
+
+
+class Board(models.Model):
+    name = models.CharField(
+        default="default board",
+        max_length=140)
+    movies = models.ManyToManyField(
+        Movie,
+        related_name="boards",
+        related_query_name="board"
+    )

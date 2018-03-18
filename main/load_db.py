@@ -2,6 +2,10 @@ import csv
 
 from main.models import Genre, Movie, User, Rating, Tag
 
+from django.db import IntegrityError
+
+import datetime
+
 genres = [
  "action",
  "adventure",
@@ -56,4 +60,55 @@ def add_genre_to_movie(movie, genres):
     print("saved movie " + str(movie.movie_id))
     movie.save()
         
-path_movies = 'csvData/tags.csv'
+path_tags = 'csvData/tags.csv'
+
+with open(path_tags) as csvDataFile:
+    csvReader = csv.reader(csvDataFile)
+    next(csvReader, None)  # skip the headers
+    for row in csvReader:
+        user, created = User.objects.get_or_create(user_id=row[0])
+        if created:
+            user.save()
+        
+        try:
+            user.movies.add(row[1])
+            user.save()
+            print("added user and movie")
+        except IntegrityError:
+            print("multiple tags")
+            continue
+
+with open(path_tags) as csvDataFile:
+    csvReader = csv.reader(csvDataFile)
+    next(csvReader, None)  # skip the headers
+    for row in csvReader:
+        try:
+            new_tag = Tag(
+                tag=row[2],
+                timestamp=datetime.datetime.fromtimestamp(row[3])
+                user=row[0],
+                movie=row[1]
+            )
+            new_tag.save()
+            print("tag saved")
+        except Exception as e:
+            print("Exception: " + str(e))
+
+
+path_ratings = 'csvData/ratings.csv'
+
+with open(path_ratings) as csvDataFile:
+    csvReader = csv.reader(csvDataFile)
+    next(csvReader, None)  # skip the headers
+    for row in csvReader:
+        user, created = User.objects.get_or_create(user_id=row[0])
+        if created:
+            user.save()
+        
+        try:
+            user.movies.add(row[1])
+            user.save()
+            print("added user and movie")
+        except IntegrityError:
+            print("multiple ratings")
+            continue
