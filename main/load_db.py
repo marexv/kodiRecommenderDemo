@@ -1,31 +1,32 @@
 import csv
 
-from main.models import Genre, Movie, User, Rating, Tag
+from main.models import Genre, Movie, User, Rating, Tag, Board
 
 from django.db import IntegrityError
 
 import datetime
 
 genres = [
- "action",
- "adventure",
- "animation",
- "childrens",
- "comedy",
- "crime",
- "documentary",
- "drama",
- "fantasy",
- "film-noir",
- "horror",
- "musical",
- "mystery",
- "romance",
- "sci-fi",
- "thriller",
- "war",
- "western",
+    "action",
+    "adventure",
+    "animation",
+    "childrens",
+    "comedy",
+    "crime",
+    "documentary",
+    "drama",
+    "fantasy",
+    "film-noir",
+    "horror",
+    "musical",
+    "mystery",
+    "romance",
+    "sci-fi",
+    "thriller",
+    "war",
+    "western",
 ]
+
 
 def save_genre(genres):
     for genre in genres:
@@ -33,9 +34,10 @@ def save_genre(genres):
         if not Genre.objects.filter(name=genre).exists():
             new_genre = Genre(name=genre)
             new_genre.save()
-        
+
+
 path_movies = 'csvData/movies.csv'
- 
+
 # Save movies:
 with open(path_movies) as csvDataFile:
     csvReader = csv.reader(csvDataFile)
@@ -43,12 +45,13 @@ with open(path_movies) as csvDataFile:
     for row in csvReader:
         movie = Movie(
             movie_id=row[0],
-            title = row[1]            
+            title=row[1]
         )
         movie.save()
         genres = row[2].lower().replace("|", " ").split()
         add_genre_to_movie(movie, genres)
-        
+
+
 def add_genre_to_movie(movie, genres):
     genre_objects = Genre.objects.all()
     for genre in genres:
@@ -59,7 +62,8 @@ def add_genre_to_movie(movie, genres):
             continue
     print("saved movie " + str(movie.movie_id))
     movie.save()
-        
+
+
 path_tags = 'csvData/tags.csv'
 
 with open(path_tags) as csvDataFile:
@@ -67,9 +71,9 @@ with open(path_tags) as csvDataFile:
     next(csvReader, None)  # skip the headers
     for row in csvReader:
         user, created = User.objects.get_or_create(user_id=row[0])
-        if created:
-            user.save()
-        
+        # if created:
+        #     user.save()
+
         try:
             user.movies.add(row[1])
             user.save()
@@ -78,19 +82,19 @@ with open(path_tags) as csvDataFile:
             print("multiple tags")
             continue
 
+# Add actual tags:
 with open(path_tags) as csvDataFile:
     csvReader = csv.reader(csvDataFile)
     next(csvReader, None)  # skip the headers
     for row in csvReader:
         try:
-            new_tag = Tag(
-                tag=row[2],
-                timestamp=datetime.datetime.fromtimestamp(row[3])
-                user=row[0],
-                movie=row[1]
-            )
-            new_tag.save()
-            print("tag saved")
+            tag, created = Tag.objects.get_or_create(
+                tag=row[2].lower().strip())
+            movie = Movie.objects.get(movie_id=int(row[1]))
+            movie.tags.add(tag)
+            user = User.objects.get(user_id=int(row[0]))
+            user.tags.add(tag)
+            print("tag saved " + str(csvReader.line_num))
         except Exception as e:
             print("Exception: " + str(e))
 
@@ -104,11 +108,40 @@ with open(path_ratings) as csvDataFile:
         user, created = User.objects.get_or_create(user_id=row[0])
         if created:
             user.save()
-        
+
         try:
             user.movies.add(row[1])
             user.save()
             print("added user and movie")
         except IntegrityError:
             print("multiple ratings")
-            continue
+
+with open(path_ratings) as csvDataFile:
+    csvReader = csv.reader(csvDataFile)
+    next(csvReader, None)  # skip the headers
+    for row in csvReader:
+        try:
+            rating = Rating.objects.create(
+                rating=row[2])
+            movie = Movie.objects.get(movie_id=int(row[1]))
+            movie.ratings.add(rating)
+            user = User.objects.get(user_id=int(row[0]))
+            user.ratings.add(rating)
+        except Exception as e:
+            print("Error in ratings " + str(e))
+
+# Natural boards tag-movie
+
+# Natural boards movie-actor
+
+# Creat boards - user Genre
+for user in User.objects.all():
+    for genre in Genre.objects.all():
+        movies = user.movies.filter(genres__name=genre.name)
+        if len(movies) > 3:
+            board_name = str(user.user_id) + " " + str(genre.name)
+            board, created = Board.objects.get_or_create(
+                name=board_name
+            )
+            for movie in movies:
+                board.movies.add(movie) 
