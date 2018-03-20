@@ -116,19 +116,26 @@ with open(path_ratings) as csvDataFile:
         except IntegrityError:
             print("multiple ratings")
 
+
 with open(path_ratings) as csvDataFile:
     csvReader = csv.reader(csvDataFile)
     next(csvReader, None)  # skip the headers
+    bulk = []
     for row in csvReader:
-        try:
-            rating = Rating.objects.create(
-                rating=row[2])
-            movie = Movie.objects.get(movie_id=int(row[1]))
-            movie.ratings.add(rating)
-            user = User.objects.get(user_id=int(row[0]))
-            user.ratings.add(rating)
-        except Exception as e:
-            print("Error in ratings " + str(e))
+        bulk.append(
+            Rating(
+                rating=row[2],
+                movie_id=int(row[1]),
+                user_id=int(row[0])
+            )
+        )
+        if csvReader.line_num%10 == 0: 
+            try: 
+                Rating.objects.bulk_create(bulk)
+            except Exception as e:
+                print("Error in ratings " + str(e))
+            print("reseting bulk at " + str(csvReader.line_num))
+            bulk=[]
 
 # Natural boards tag-movie
 

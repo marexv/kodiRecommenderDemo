@@ -10,10 +10,6 @@ class Genre(models.Model):
         return self.name
 
 
-class Rating(models.Model):
-    rating = models.FloatField(
-        blank=False)
-
 class Tag(models.Model):
     tag = models.CharField(
         blank=False,
@@ -21,6 +17,7 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.tag
+
 
 class Movie(models.Model):
     movie_id = models.IntegerField(
@@ -38,13 +35,6 @@ class Movie(models.Model):
     genres = models.ManyToManyField(
         Genre,
         blank=True,
-        related_name="movies",
-        related_query_name="movie")
-    ratings = models.ForeignKey(
-        Rating,
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True,
         related_name="movies",
         related_query_name="movie")
     tags = models.ManyToManyField(
@@ -65,13 +55,6 @@ class User(models.Model):
         Movie,
         related_name="users",
         related_query_name="user")
-    ratings = models.ForeignKey(
-        Rating,
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True,
-        related_name="users",
-        related_query_name="user")
     tags = models.ManyToManyField(
         Tag,
         blank=True,
@@ -80,6 +63,21 @@ class User(models.Model):
     
     def __str__(self):
         return "user " + str(self.user_id)
+
+
+class Rating(models.Model):
+    rating = models.FloatField(
+        blank=False)
+    movie = models.ForeignKey(
+        Movie,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True)
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True)
 
 
 class Board(models.Model):
