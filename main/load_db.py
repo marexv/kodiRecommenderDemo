@@ -151,4 +151,6 @@ for user in User.objects.all():
                 name=board_name
             )
             for movie in movies:
-                board.movies.add(movie) 
+                board.movies.add(movie)
+
+
