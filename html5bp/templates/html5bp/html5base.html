@@ -1,0 +1,71 @@
+{% load staticfiles %}
+<!doctype html>
+<html {{ html_attr|safe }} class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>{% block title %}{% endblock %}</title>
+        <meta name="description" content="{% block description %}{% endblock %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+        <link rel="manifest" href="site.webmanifest">
+        <link rel="icon" href="{% static 'html5bp/img/favicon.ico' %}">
+        <link rel="apple-touch-icon" href="{% static 'html5bp/img/icon.png' %}">
+        <!-- Place favicon.ico in the root directory -->
+
+        <!-- bootstraps css -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        
+        {% block normalizations %}
+        <link rel="stylesheet" href="{% static 'html5bp/css/normalize.css' %}">
+        <link rel="stylesheet" href="{% static 'html5bp/css/main.css' %}">
+        {% endblock %}
+
+        {% block head %}{% endblock %}
+    </head>
+    <body {{ body_attr|safe }}>
+        <!--[if lte IE 9]>
+            {% block outdated_message %}
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+            {% endblock %}
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+        {% block content %}
+        <p>Hello world! This is HTML5 Boilerplate.</p>
+        {% endblock %}
+
+        {% block modernizr %}
+        <script src="{% static 'html5bp/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+        {% endblock %}
+
+        {% block jquery %}
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <script>window.jQuery || document.write('<script src="{% static 'html5bp/js/vendor/jquery-3.2.1.min.js' %}"><\/script>')</script>
+        <script src="{% static 'html5bp/js/plugins.js' %}"></script>
+        <!-- Bootstrap js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>       
+        
+        <!-- ADDED BY ME -->
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>  
+        <!-- Plugin JavaScript - for nice scro -->
+        <script src="{% static 'html5bp/js/vendor/jquery.easing.min.js' %}"></script>
+        <!-- end of ADDED BY ME -->
+        {% endblock %} 
+        
+        {% block pre_main_script %}{% endblock %}
+
+        <script src="{% if main_js %}{% static main_js %}{% else %}{% static 'html5bp/js/main.js' %}{% endif %}"></script>
+       
+        {% block post_main_script %}{% endblock %}
+
+        <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+        <script>
+            window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
+            ga('create','UA-XXXXX-Y','auto');ga('send','pageview')
+        </script>
+        <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+    </body>
+</html>

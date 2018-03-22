@@ -1,0 +1,19 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    <name> -- <role> -- <twitter>
+    Marko Prcac -- Developer
+    Vladan Jovicic -- Developer
+    Edin Husic -- Consulting and testing
+
+# THANKS
+
+    <name>
+
+# TECHNOLOGY COLOPHON
+
+    Python, Django
+    CSS3, HTML5, JavaScript
+    Apache Server Configs, jQuery, Modernizr, Normalize.css
