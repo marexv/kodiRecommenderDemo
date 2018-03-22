@@ -127,12 +127,14 @@ def index(request):
                             "main/index.html", 
                             {"form":form,
                              "status": "Here are your recommendations",
+                             "anchor" : "recommender",
                              "recommendations":recommendations})
             else:
                 return render(request, 
                               "main/index.html", 
                               {"form": form,
                                "status": "Movie not found",
+                               "anchor" : "page-top",
                                "recommendations": None})
         else:
             print("form is not valid")       
@@ -144,4 +146,5 @@ def index(request):
         'main/index.html',
         {"form": form,
          "status": None,
+         "anchor" : "page-top",
          "recommendations": None})
