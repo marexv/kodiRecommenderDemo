@@ -120,6 +120,30 @@ header {
     width:100%;
 }
 
+.question {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+h1 {
+    font-family: 'Rubik', sans-serif;
+}
+
+h2, h4 {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 400;
+}
+
+p.lead {
+    font-family: 'Lato', sans-serif;
+}
+
+header h4 {
+    font-family: 'Lato', sans-serif;
+}
+#back-to-top {
+    display: none;
+}
   
 /* ==========================================================================
    Helper classes

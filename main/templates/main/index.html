@@ -4,49 +4,18 @@
 recommender demo 
 {% endblock %} 
 
-{% block head %} 
+{% block head %}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Lato:300i|Rubik:400,500" rel="stylesheet"> 
 {% endblock %}
 
 {% block content %}
-<!--
-<form action="/" method="post">
-    {% csrf_token %}
-    <ul class="list-unstyled">
-        <li>
-            <p>
-                Search 
-                <small>
-                    (start typing parts of username, first name or last name)
-                </small>
-            </p>
-        </li>
-        <li style="margin-bottom:18px;">
-            {{ form.title }}
-        </li>
-        <li style="margin-bottom:18px;">
-            <input class="btn btn-default btn-block" type="submit" value="Get the Data" />
-        </li>
-    </ul>
-</form>
-
-<h2>{{ status }}</h2>
-
-{% if recommendations %}
-<ul>
-    {% for movie in recommendations %}
-    <li>
-        {{ movie }}
-    </li>
-    {% endfor %}
-</ul>
-{% endif %}
--->
 
 <!-- Navigation -->
 <a name="page-top"></a> 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
     <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">MDR</a>
+        <a class="navbar-brand js-scroll-trigger" href="#page-top"><i id="back-to-top" class="fa fa-chevron-circle-up"></i></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
             aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -60,10 +29,13 @@ recommender demo
                     <a class="nav-link js-scroll-trigger" href="#about">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#services">Services</a>
+                    <a class="nav-link js-scroll-trigger" href="#idea">Idea</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+                    <a class="nav-link js-scroll-trigger" href="#kodi">KODI</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#aboutme">About me</a>
                 </li>
             </ul>
         </div>
@@ -72,8 +44,8 @@ recommender demo
 
 <header class="bg-primary text-white">
     <div class="container text-center">
-        <h1>Marko's demo recommender</h1>
-        <p class="lead">First attempt's at guessing what you want to watch next...</p>
+        <h1>Marko's Demo Recommender</h1>
+        <h4>First attempt at guessing what you want to watch next...</h4>
     </div>
 </header>
 
@@ -85,8 +57,10 @@ recommender demo
                     {% csrf_token %}
                     <ul class="list-unstyled">
                         <li>
+                            <h2>
+                                Give it a try :)
+                            </h2>
                             <p>
-                                Give it a try!
                                 <small>
                                     (Enter last movie you saw / movie you want recommendations to like like)
                                 </small>
@@ -96,7 +70,14 @@ recommender demo
                             {{ form.title }}
                         </li>
                         <li style="margin-bottom:18px;">
-                            <input class="btn btn-primary btn-block" type="submit" value="Get Recommendations!" />
+                            <input class="btn btn-primary btn-block" type="submit" value="Get Recommendations" />
+                        </li>
+                        <li>
+                            <p class="text-center"> 
+                                <small>
+                                    (Server is not dead! It just takes some time because of the sub-optimal hosting solution. Please give it a shot)
+                                </small>
+                            </p>
                         </li>
                     </ul>
                 </form>
@@ -105,13 +86,13 @@ recommender demo
                 {% if status %}
                 <h2>{{ status }}</h2>
                 {% endif %} {% if recommendations %}
-                <ul>
+                <ol>
                     {% for movie in recommendations %}
                     <li>
                         {{ movie }}
                     </li>
                     {% endfor %}
-                </ul>
+                </ol>
                 {% endif %}
             </div>
         </div>
@@ -122,39 +103,74 @@ recommender demo
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto">
-                <h2>About this recommender</h2>
-                <p class="lead">This is just proof on concept - small DB, no ML and just genre based boards</p>
-                <p>How does it feel?</p>
-                <!--
-                <ul>
-                    <li></li>
-                    <li>Responsive behavior when clicking nav links perfect for a one page website</li>
-                    <li>Bootstrap's scrollspy feature which highlights which section of the page you're on in the navbar</li>
-                    <li>Minimal custom CSS so you are free to explore your own unique design options</li>
+                <h2>About this setup</h2>
+                <p class="lead">This is just a proof of concept - small DB, no ML and only genre based boards. How does it feel?</p>
+                <h4>FAQ</h4>
+                <ul class="list-unstyled">
+                    <li class="question">Why is it so slow?</li>
+                    <li>It's using sqllite running on python anywhere's file system. They say it can be sluggish. Nevertheless DB solution should be a dedicated graph DB.</li>
+                    <li class="question">What is the point of another recommender?</li>
+                    <li>I wanted to do something with as little of user data as possible and without bubble effect</li>
                 </ul>
-                -->
             </div>
         </div>
     </div>
 </section>
 
-<section id="services" class="bg-light">
+<section id="idea" class="bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2>Idea</h2>
+                <p class="lead">Graph theory, random walks and (optionally ML powered) scoring function.</p>
+                <ol>
+                    <li>Construct a digraph with set of boards and set of movies. Each movie is in several boards and every board contains several movies.</li>
+                    <li>Start with last displayed movie and perform a random walk.</li>
+                    <li>Sample now consist of movies visited the most times (This prevents bubbling).</li>
+                    <li>Apply socring function on sample (This can be as complicated as you want it to be).</li>
+                </ol>
+                <p class="lead">I got this idea from <a href="https://cs.stanford.edu/people/jure/">prof. Jure Leskovec</a>. He is using it at <span style="color:red"><i class="fa fa-pinterest-p"></i>interst</span>  so I wanted to try it out in this setting.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="kodi" class="bg-light">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto">
                 <h2>About integration with kodi</h2>
-                <p class="lead">I know it has to be in C++. It can be done!</p>
+                <h4>I know it has to be done in C++!</h4>
+                <ol>
+                    <li>Go through users library and movie metadata</li>
+                    <li>Construct boards via natural occuring relations ... genre, actor, director ... (This should be fairly extensive set of rules)</li>
+                    <li>Apply algorithm.</li>
+                </ol>
+                <h4>Challenges:</h4>
+                <ul>
+                    <li>Optimal DB implementation</li>
+                    <li>Derive optimal set of rules</li>
+                    <li>Batch move delivery (recommendation pagination)</li>
+                </ul>
             </div>
         </div>
     </div>
 </section>
 
-<section id="contact">
+<section id="aboutme">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto">
                 <h2>About me</h2>
-                <p class="lead">Cooming soon!</p>
+                <p class="lead">Soon to be mathematics MSc, 2 years of develoment experience, water polo player.</p>
+                <p>
+                    <i class="fa fa-linkedin"></i>
+                    <a href=" https://www.linkedin.com/in/marko-prca%C4%87-83472568/">LinkedIN</a>
+                </p>
+                <p>
+                    <i class="fa fa-github"></i>
+                    <a href=" https://github.com/marexv/kodiRecommenderDemo">Github (this project)</a>
+                </p>
             </div>
         </div>
     </div>
@@ -167,7 +183,9 @@ recommender demo
     </div>
     <!-- /.container -->
 </footer>
-{% endblock %} {% block post_main_script %}
+{% endblock %} 
+
+{% block post_main_script %}
 <script type="text/javascript">
     $(document).ready(function () {
         $(function () {
@@ -183,5 +201,14 @@ recommender demo
         location.hash = "#" + "{{ anchor }}";
     };
 
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("back-to-top").style.display = "block";
+        } else {
+            document.getElementById("back-to-top").style.display = "none";
+        }
+    }
 </script>
 {% endblock %}
