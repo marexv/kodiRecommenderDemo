@@ -29,6 +29,7 @@ genres = [
 
 
 def save_genre(genres):
+    """Save all genres to genres table."""
     for genre in genres:
         genre = str(genre).strip().lower()
         if not Genre.objects.filter(name=genre).exists():
@@ -38,8 +39,9 @@ def save_genre(genres):
 
 path_movies = 'csvData/movies.csv'
 
-# Save movies:
+# save movies:
 with open(path_movies) as csvDataFile:
+    """Save all movies to DB and add relations to genres."""
     csvReader = csv.reader(csvDataFile)
     next(csvReader, None)  # skip the headers
     for row in csvReader:
@@ -53,6 +55,7 @@ with open(path_movies) as csvDataFile:
 
 
 def add_genre_to_movie(movie, genres):
+    """Helper function for adding genre relations to movie."""
     genre_objects = Genre.objects.all()
     for genre in genres:
         try:
@@ -67,6 +70,7 @@ def add_genre_to_movie(movie, genres):
 path_tags = 'csvData/tags.csv'
 
 with open(path_tags) as csvDataFile:
+    """Save all users to DB and add movies that they watched."""
     csvReader = csv.reader(csvDataFile)
     next(csvReader, None)  # skip the headers
     for row in csvReader:
