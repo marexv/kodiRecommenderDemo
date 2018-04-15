@@ -24,3 +24,6 @@ that should be it!
 
 - change `DEBUG` in `KODI_Recommender/settings` to `True`!!
 
+## Using 
+
+- (HTML 5 Boiler plate)[https://github.com/h5bp/html5-boilerplate]
