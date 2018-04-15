@@ -9,7 +9,15 @@ import json
 import random
 import operator
 
+from fuzzywuzzy import fuzz
+from pprint import pprint
+
+from django.conf import settings
+
 from main.models import Movie, Board
+from main.load_db import (join_boards, 
+                          create_boards_for_same_series,
+                          remove_boards_from_graph)
 
 """
 Run locally in console:
@@ -27,6 +35,7 @@ movie = Movie.objects.all()[0]
 
 # Creat graph...
 graph = create_or_update_graph(boards=boards, movies=movies)
+graph = add_additional_boards(graph)
 save_graph_to_json(graph)
  
 # OR load graph.
@@ -64,8 +73,27 @@ def create_or_update_graph(
 
     return graph
 
-# PATH FOR PROD
-file_path = "/home/markoprcac/kodiRecommenderDemo/graph.json"
+
+def add_additional_boards(graph={}):
+    print("Inital lenght: {}".format(len(graph)))
+    graph1, merged_boards = join_boards()
+    graph.update(graph1)
+    print("Mid-update lenght {}".format(len(graph)))
+    graph = remove_boards_from_graph(graph, merged_boards)
+    print("After redundant removal lenght {}".format(len(graph)))
+    graph2 = create_boards_for_same_series()
+    graph.update(graph2)
+    print("Final length {}".format(len(graph)))
+    return graph
+
+
+if settings.DEBUG:
+   # Local path
+   file_path = "graph.json"
+else:
+    # Path for PROD
+    file_path = "/home/markoprcac/kodiRecommenderDemo/graph.json"
+
 
 def save_graph_to_json(graph: dict, file_path=file_path):
     """Save dict representing movie graph to JSON file."""
@@ -113,6 +141,14 @@ def get_recommendations(movie: Movie, graph={}, steps=1000, alpha=0.5):
     
     # Sort the movies by number of visitis. Here we could implement some other
     # sorting function.
+    
+    if starting_movie in movies:
+        del movies[starting_movie]
+
+    movies = check_for_merged_boards(movies=movies,
+                                     graph=graph,
+                                     starting_movie=starting_movie)
+
     sorted_movies = sorted(
                         movies.items(),
                         key=operator.itemgetter(1),
@@ -125,4 +161,34 @@ def get_recommendations(movie: Movie, graph={}, steps=1000, alpha=0.5):
     sorted_movies_titles = [movie[0] for movie in sorted_movies]
 
     return sorted_movies_titles
-    
+
+
+# Helper functions:
+def get_same_series_by_name_matching(
+        movies: dict,
+        starting_movie: str,
+        threshold: int,
+        weight: int):
+    print("BEFORE NAME WEIGHT")
+    pprint(movies)
+    for key, value in movies.items():
+        if fuzz.token_set_ratio(starting_movie[:12], key[:12]) > threshold:
+            value += weight
+    print("AFTER")
+    pprint(movies)
+    return movies
+
+def check_for_merged_boards(
+        movies: dict,
+        graph: dict,
+        starting_movie: str):
+    new_title_1 = starting_movie.replace("-", " ").lower().split(" ")[:2]
+    name = "Series Board {}".format(" ".join(new_title_1))
+    if name in graph:
+        for movie in graph[name]:
+            try:
+                movies[movie] = movies[movie] + 7
+            except KeyError:
+                movies[movie] = 10
+
+    return movies
