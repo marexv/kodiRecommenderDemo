@@ -7,7 +7,7 @@
         <title>{% block title %}{% endblock %}</title>
         <meta name="description" content="{% block description %}{% endblock %}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
- 
+
         <link rel="manifest" href="site.webmanifest">
         <link rel="icon" href="{% static 'html5bp/img/favicon.ico' %}">
         <link rel="apple-touch-icon" href="{% static 'html5bp/img/icon.png' %}">
@@ -15,7 +15,7 @@
 
         <!-- bootstraps css -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        
+
         {% block normalizations %}
         <link rel="stylesheet" href="{% static 'html5bp/css/normalize.css' %}">
         <link rel="stylesheet" href="{% static 'html5bp/css/main.css' %}">
@@ -45,26 +45,26 @@
         <script src="{% static 'html5bp/js/plugins.js' %}"></script>
         <!-- Bootstrap js -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>       
-        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
         <!-- ADDED BY ME -->
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>  
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <!-- Plugin JavaScript - for nice scro -->
         <script src="{% static 'html5bp/js/vendor/jquery.easing.min.js' %}"></script>
         <!-- end of ADDED BY ME -->
-        {% endblock %} 
-        
+        {% endblock %}
+
         {% block pre_main_script %}{% endblock %}
 
         <script src="{% if main_js %}{% static main_js %}{% else %}{% static 'html5bp/js/main.js' %}{% endif %}"></script>
-       
+
         {% block post_main_script %}{% endblock %}
 
         <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
         <script>
             window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
-            ga('create','UA-XXXXX-Y','auto');ga('send','pageview')
+            ga('create','UA-116295842-1','auto');ga('send','pageview')
         </script>
         <script src="https://www.google-analytics.com/analytics.js" async defer></script>
     </body>
