@@ -18,7 +18,8 @@ that should be it!
 
 ## To do:
 
-- Use actors, directors and tags data for forming boards
+- [x] Implement faster graph datastructure
+- [ ] Use actors, directors and tags data for forming boards
 
 ## Note to self
 
