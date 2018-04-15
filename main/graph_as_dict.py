@@ -64,14 +64,16 @@ def create_or_update_graph(
 
     return graph
 
+# PATH FOR PROD
+file_path = "/home/markoprcac/kodiRecommenderDemo/graph.json"
 
-def save_graph_to_json(graph: dict, file_path="../graph.json"):
+def save_graph_to_json(graph: dict, file_path=file_path):
     """Save dict representing movie graph to JSON file."""
     with open(file_path, "w") as fp:
         json.dump(graph, fp, sort_keys=True, indent=4)
 
 
-def read_graph_form_json(file_path="../graph.json"):
+def read_graph_form_json(file_path=file_path):
     """Load dict from JSON."""
     with open(file_path, "r") as fp:
         data = json.load(fp)
