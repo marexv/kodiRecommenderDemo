@@ -1,5 +1,8 @@
 """
 Contains code for implementing movie graph as python dict.
+
+* DEV file path: "graph.json"
+* PROD file path: "/home/markoprcac/kodiRecommenderDemo/graph.json"
 """
 
 import json
@@ -32,7 +35,6 @@ graph = read_graph_form_json()
 get_recommendations(movie, graph, steps=1000, alpha=0.8)
 """
 
-
 def create_or_update_graph(
     boards=None,
     movies=None,
@@ -63,13 +65,13 @@ def create_or_update_graph(
     return graph
 
 
-def save_graph_to_json(graph: dict, file_path="graph.json"):
+def save_graph_to_json(graph: dict, file_path="../graph.json"):
     """Save dict representing movie graph to JSON file."""
     with open(file_path, "w") as fp:
         json.dump(graph, fp, sort_keys=True, indent=4)
 
 
-def read_graph_form_json(file_path="graph.json"):
+def read_graph_form_json(file_path="../graph.json"):
     """Load dict from JSON."""
     with open(file_path, "r") as fp:
         data = json.load(fp)
