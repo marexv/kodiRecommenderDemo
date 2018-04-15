@@ -84,8 +84,17 @@ recommender demo
 
 
                 {% if status %}
-                <h2>{{ status }}</h2>
-                {% endif %} {% if recommendations %}
+                <h2>{{ status }}
+                    {% if explanation %}
+                    <a href="#about">
+                        <small>
+                            {{ explanation }}
+                        </small>
+                    </a>
+                    {% endif %} 
+                </h2>
+                {% endif %}
+                {% if recommendations %}
                 <ol>
                     {% for movie in recommendations %}
                     <li>
@@ -112,6 +121,8 @@ recommender demo
                     <li><small>UPDATE: Since first implementation i have moved to "in-memory" graph storage. So now recommender works noticeably faster.</small></li>
                     <li class="question">What is the point of another recommender?</li>
                     <li>I wanted to do something with as little of user data as possible and without bubble effect</li>
+                    <li class="question">Why I recommendations so basic and bad?</li>
+                    <li>I've taken small dataset and I only do recommendations based on genres, I have to add actors, directors, tags and other data.</li>
                 </ul>
             </div>
         </div>

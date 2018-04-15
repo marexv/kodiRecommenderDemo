@@ -48,7 +48,8 @@ def index(request):
                             request,
                             "main/index.html", 
                             {"form":form,
-                             "status": "Here are your recommendations",
+                             "status": "Here are your recommendations,",
+                             "explanation": "Why soo basic :/ ?",
                              "anchor" : "recommender",
                              "recommendations":recommendations})
             else:

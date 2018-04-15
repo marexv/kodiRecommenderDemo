@@ -1,4 +1,4 @@
-# How to run this locally
+## How to run this locally
 
 - use virtualenv to install virtual environment with python 3.6
 
@@ -10,6 +10,17 @@
 
 - pip install -r requirements.txt
 
+- change `DEBUG` in `KODI_Recommender/settings` to `True`
+
 - python manage.py runserver
 
 that should be it!
+
+## To do:
+
+- Use actors, directors and tags data for forming boards
+
+## Note to self
+
+- change `DEBUG` in `KODI_Recommender/settings` to `True`!!
+
