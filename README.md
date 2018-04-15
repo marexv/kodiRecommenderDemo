@@ -26,4 +26,4 @@ that should be it!
 
 ## Using 
 
-- (HTML 5 Boiler plate)[https://github.com/h5bp/html5-boilerplate]
+- [HTML 5 Boiler plate](https://github.com/h5bp/html5-boilerplate)
